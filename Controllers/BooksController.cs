@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bookly.APIs.Controllers
 {
-    
+
     public class BooksController : BaseApiController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -37,12 +37,27 @@ namespace Bookly.APIs.Controllers
             var spec = new BookWithAuthorsSpecifications(id);
             var book = await _unitOfWork.Repository<Book>().GetEntityWithSpecAsync(spec);
             if (book is null) return NotFound();
-            return Ok(_mapper.Map<Book,BookDto>(book));
+            return Ok(_mapper.Map<Book, BookDto>(book));
         }
 
 
+        [HttpPost]
+        public async Task<ActionResult<BookDto>> AddBook(BookDto bookDto)
+        {
+            var mappedBook = _mapper.Map<BookDto, Book>(bookDto);
+            await _unitOfWork.Repository<Book>().AddAsync(mappedBook);
+            await _unitOfWork.Complete();
+            return Ok(bookDto);
+        }
 
-
+        [HttpPut]
+        public async Task<ActionResult<BookDto>> UpdateBook(BookDto bookDto)
+        {
+            var mappedBook = _mapper.Map<BookDto, Book>(bookDto);
+             _unitOfWork.Repository<Book>().Update(mappedBook);
+            await _unitOfWork.Complete();
+            return Ok(bookDto);
+        }
 
     }
 }

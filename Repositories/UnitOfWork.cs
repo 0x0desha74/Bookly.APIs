@@ -35,9 +35,9 @@ namespace Bookly.APIs.Repositories
 
 
 
-        public async Task Complete()
+        public async Task<int> Complete()
         {
-            await _dbContext.SaveChangesAsync();
+          return  await _dbContext.SaveChangesAsync();
         }
 
         public void Dispose()

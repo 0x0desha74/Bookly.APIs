@@ -8,8 +8,8 @@ namespace Bookly.APIs.Helpers
     {
         public MappingProfiles()
         {
-            CreateMap<Book, BookDto>();
-            CreateMap<Author, AuthorDto>();
+            CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<Author, AuthorDto>().ReverseMap();
         }
     }
 }
