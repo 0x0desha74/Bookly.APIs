@@ -35,14 +35,14 @@ namespace Bookly.APIs.Repositories
 
 
 
-        public Task Complete()
+        public async Task Complete()
         {
-            throw new NotImplementedException();
+            await _dbContext.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _dbContext.Dispose();
         }
 
        

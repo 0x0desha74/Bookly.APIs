@@ -1,6 +1,7 @@
 ﻿using Bookly.APIs.Data;
 using Bookly.APIs.Entities;
 using Bookly.APIs.Interfaces;
+using Bookly.APIs.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookly.APIs.Repositories
@@ -25,6 +26,19 @@ namespace Bookly.APIs.Repositories
         }
 
 
+        public async Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecifications<T> spec)
+        {
+           return await ApplySpecifications(spec).ToListAsync();
+        }
+
+        public async Task<T> GetEntityWithSpecAsync(ISpecifications<T> spec)
+        {
+          return  await ApplySpecifications(spec).FirstOrDefaultAsync();
+        }
+
+
+
+
         public async Task AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
@@ -41,5 +55,14 @@ namespace Bookly.APIs.Repositories
         {
             _dbContext.Set<T>().Update(entity);
         }
+
+
+
+        private  IQueryable<T> ApplySpecifications(ISpecifications<T> spec)
+        {
+            return  SpecificationEvaluator<T>.BuildQuery(_dbContext.Set<T>(), spec);
+        }
+
+       
     }
 }

@@ -1,5 +1,8 @@
 
 using Bookly.APIs.Data;
+using Bookly.APIs.Helpers;
+using Bookly.APIs.Interfaces;
+using Bookly.APIs.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookly.APIs
@@ -16,7 +19,8 @@ namespace Bookly.APIs
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddAutoMapper(typeof(MappingProfiles));
+            builder.Services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("No Connection String Was Found");
