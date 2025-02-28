@@ -49,7 +49,7 @@ namespace Bookly.APIs.Repositories
             _dbContext.Set<T>().Remove(entity);
         }
 
-       
+
 
         public void Update(T entity)
         {
@@ -63,6 +63,7 @@ namespace Bookly.APIs.Repositories
             return  SpecificationEvaluator<T>.BuildQuery(_dbContext.Set<T>(), spec);
         }
 
-       
-    }
+
+        }
+    
 }
