@@ -7,12 +7,15 @@ namespace Bookly.APIs.Specifications
         public BookWithAuthorsSpecifications(int id):base(b=>b.Id==id)
         {
             Includes.Add(b => b.Authors);
+            Includes.Add(b => b.Genre);
         }
 
 
         public BookWithAuthorsSpecifications()
         {
-            Includes.Add(b => b.Authors);
+            Includes.Add(b => b.Genre);
+            Includes.Add(b => b.Genre);
+
         }
     }
 }

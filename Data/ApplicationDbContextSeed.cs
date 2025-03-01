@@ -7,17 +7,30 @@ namespace Bookly.APIs.Data
     {
         public async static Task DataSeedAsync(ApplicationDbContext dbContext)
         {
-            if (!dbContext.Authors.Any())
+            //if (!dbContext.Authors.Any())
+            //{
+            //    var authorsData = File.ReadAllText("../Bookly.APIs/Data/DataSeed/Authors.json");
+            //    var authors = JsonSerializer.Deserialize<List<Author>>(authorsData);
+            //    if (authors is not null && authors.Count > 0)
+            //    {
+            //        foreach (var author in authors)
+            //            await dbContext.Authors.AddAsync(author);
+            //    }
+            //    await dbContext.SaveChangesAsync();
+            //}
+            
+            if (!dbContext.Genres.Any())
             {
-                var authorsData = File.ReadAllText("../Bookly.APIs/Data/DataSeed/Authors.json");
-                var authors = JsonSerializer.Deserialize<List<Author>>(authorsData);
-                if (authors is not null && authors.Count > 0)
+                var genresData = File.ReadAllText("../Bookly.APIs/Data/DataSeed/Genres.json");
+                var genres = JsonSerializer.Deserialize<List<Genre>>(genresData);
+                if (genres is not null && genres.Count > 0)
                 {
-                    foreach (var author in authors)
-                        await dbContext.Authors.AddAsync(author);
+                    foreach (var genre in genres)
+                        await dbContext.Genres.AddAsync(genre);
                 }
                 await dbContext.SaveChangesAsync();
             }
+
             if (!dbContext.Books.Any())
             {
                 var booksData = File.ReadAllText("../Bookly.APIs/Data/DataSeed/Book.json");
@@ -29,9 +42,6 @@ namespace Bookly.APIs.Data
                 }
                 await dbContext.SaveChangesAsync();
             }
-
-
-
 
         }
 
